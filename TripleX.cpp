@@ -19,9 +19,7 @@ void PlayGame() {
     PrintIntroduction();
 
     IsGuessCorrect();
-
     
-
     if (BattleAgain()) {
         PlayGame();
     } else {
@@ -40,10 +38,26 @@ void PrintIntroduction() {
 }
 
 void IsGuessCorrect() {
+<<<<<<< Updated upstream
     RiddleCount++;
 
     //Generates this riddle's code
     CodeA = RandNumGenerator(RiddleCount); CodeB = RandNumGenerator(RiddleCount); CodeC = RandNumGenerator(RiddleCount);
+=======
+    
+    while (RiddleCount <= RiddleLimit) {
+        //Generates this riddle's code
+        CodeA = RandNumGenerator(RiddleCount); CodeB = RandNumGenerator(RiddleCount); CodeC = RandNumGenerator(RiddleCount);
+
+        int CodeSum = CodeA + CodeB + CodeC; int CodeProduct = CodeA * CodeB * CodeC; 
+
+        std::cout << "\nFor riddle #" << RiddleCount - 1;
+        std::cout << " name the three numbers which simultaneously possess:\n\n A sum of " << CodeSum << " and A product of " << CodeProduct << "\n\n";
+        std::cout << "Guess three numbers each seperated by a space in the line below:\n";
+
+        std::cin.clear(); std::cin.ignore(); //magically clears any errors and discards the buffer
+        std::cin >> GuessA >> GuessB >> GuessC;
+>>>>>>> Stashed changes
 
     int CodeSum = CodeA + CodeB + CodeC; int CodeProduct = CodeA * CodeB * CodeC; 
     
@@ -53,15 +67,36 @@ void IsGuessCorrect() {
 
     std::cin >> GuessA >> GuessB >> GuessC;
 
+<<<<<<< Updated upstream
     GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
 
     GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
+=======
+        while (!GuessCorrect) {
+
+            LifesLeft -= 1;
+            if (LifesLeft == 0) {
+                std::cout << "\nYou died sucker!\n";
+                std::exit(0);
+            }
+
+            std::cout << "\nFOOLISH! Thy only possess " << LifesLeft << " lives left.\n\n";
+
+            std::cout << "Guess three numbers each seperated by a space in the line below:\n";
+
+            std::cin.clear(); std::cin.ignore(); //magically clears any errors and discards the buffer
+            std::cin >> GuessA >> GuessB >> GuessC;
+
+            GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
+            
+            GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
+>>>>>>> Stashed changes
 
     if (GuessCorrect) {}
 
 }
 
-int RandNumGenerator(int RiddleCount) { rand() % RiddleCount   + RiddleCount;} //when | (RC = 2, [3,2]), (RC = 3, [5,3]), (RC = 4, [7,4]), (RC = 5, [9,5]), (RC = 6, [11,6]), etc |
+int RandNumGenerator(int RiddleCount) { return ( rand() % RiddleCount   + RiddleCount ) ;} //when | (RC = 2, [3,2]), (RC = 3, [5,3]), (RC = 4, [7,4]), (RC = 5, [9,5]), (RC = 6, [11,6]), etc |
 
 bool BattleAgain() {
     std::cout << "Oh no the dishonored hangman somehow survived and has grabbed another one of your friends! What do you do?\n\n";

@@ -37,5 +37,6 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "ctime": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
