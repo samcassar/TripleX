@@ -4,7 +4,7 @@
 int CodeA; int CodeB; int CodeC;
 int GuessA; int GuessB; int GuessC; int GuessSum; int GuessProduct; bool GuessCorrect; 
 void PlayGame(); void PrintIntroduction(); bool BattleAgain(); int Choice; void IsGuessCorrect();
-int RiddleCount = 1; int RandNumGenerator(int RiddleCount); int RiddleLimit = 6;
+int RiddleCount = 2; int RandNumGenerator(int RiddleCount); int RiddleLimit = 6; int LifesLeft = 3;
 
 int main()
 {   
@@ -40,25 +40,41 @@ void PrintIntroduction() {
 }
 
 void IsGuessCorrect() {
-    RiddleCount++;
-
-    //Generates this riddle's code
-    CodeA = RandNumGenerator(RiddleCount); CodeB = RandNumGenerator(RiddleCount); CodeC = RandNumGenerator(RiddleCount);
-
-    int CodeSum = CodeA + CodeB + CodeC; int CodeProduct = CodeA * CodeB * CodeC; 
     
-    std::cout << "For riddle #" << RiddleCount;
-    std::cout << "name the three numbers which simultaneously possess:\n\n A sum of " << CodeSum << " and A product of " << CodeProduct << "\n\n";
-    std::cout << "Guess three numbers each seperated by a space in the line below:\n";
+    while (RiddleCount <= RiddleLimit) {
+        //Generates this riddle's code
+        CodeA = RandNumGenerator(RiddleCount); CodeB = RandNumGenerator(RiddleCount); CodeC = RandNumGenerator(RiddleCount);
 
-    std::cin >> GuessA >> GuessB >> GuessC;
+        int CodeSum = CodeA + CodeB + CodeC; int CodeProduct = CodeA * CodeB * CodeC; 
 
-    GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
+        std::cout << "For riddle #" << RiddleCount;
+        std::cout << "name the three numbers which simultaneously possess:\n\n A sum of " << CodeSum << " and A product of " << CodeProduct << "\n\n";
+        std::cout << "Guess three numbers each seperated by a space in the line below:\n";
 
-    GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
+        std::cin >> GuessA >> GuessB >> GuessC;
 
-    if (GuessCorrect) {}
+        GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
 
+        GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
+
+        while (!GuessCorrect) {
+            LifesLeft -= 1;
+            if (LifesLeft == 0) {
+                std::cout << "You died sucker!";
+                std::exit;
+            }
+            std::cout << "Guess three numbers each seperated by a space in the line below:\n";
+
+            GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
+            
+            GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
+
+        }
+        //Since Guess is CORRECT
+        LifesLeft = 3; RiddleCount++;
+    }
+
+    return;
 }
 
 int RandNumGenerator(int RiddleCount) { rand() % RiddleCount   + RiddleCount;} //when | (RC = 2, [3,2]), (RC = 3, [5,3]), (RC = 4, [7,4]), (RC = 5, [9,5]), (RC = 6, [11,6]), etc |
