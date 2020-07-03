@@ -1,6 +1,6 @@
 #include <iostream>
 
-int CodeA; int CodeB; int CodeC; 
+int CodeA; int CodeB; int CodeC; int checkBranchUpdates;
 int GuessA; int GuessB; int GuessC; int GuessSum; int GuessProduct; bool GuessCorrect;
 void PlayGame(); void PrintIntroduction(); bool BattleAgain(); int Choice; void IsGuessCorrect();
 
