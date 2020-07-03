@@ -4,7 +4,7 @@
 int CodeA; int CodeB; int CodeC;
 int GuessA; int GuessB; int GuessC; int GuessSum; int GuessProduct; bool GuessCorrect; 
 void PlayGame(); void PrintIntroduction(); bool BattleAgain(); int Choice; void IsGuessCorrect();
-int RiddleCount = 1; int RandNumGenerator(int RiddleCount); int RiddleLimit = 6;
+int RiddleCount = 2; int RandNumGenerator(int RiddleCount); int RiddleLimit = 6; int LifesLeft = 3;
 
 int main()
 {   
@@ -38,13 +38,7 @@ void PrintIntroduction() {
 }
 
 void IsGuessCorrect() {
-<<<<<<< Updated upstream
-    RiddleCount++;
 
-    //Generates this riddle's code
-    CodeA = RandNumGenerator(RiddleCount); CodeB = RandNumGenerator(RiddleCount); CodeC = RandNumGenerator(RiddleCount);
-=======
-    
     while (RiddleCount <= RiddleLimit) {
         //Generates this riddle's code
         CodeA = RandNumGenerator(RiddleCount); CodeB = RandNumGenerator(RiddleCount); CodeC = RandNumGenerator(RiddleCount);
@@ -55,23 +49,14 @@ void IsGuessCorrect() {
         std::cout << " name the three numbers which simultaneously possess:\n\n A sum of " << CodeSum << " and A product of " << CodeProduct << "\n\n";
         std::cout << "Guess three numbers each seperated by a space in the line below:\n";
 
-        std::cin.clear(); std::cin.ignore(); //magically clears any errors and discards the buffer
+        
         std::cin >> GuessA >> GuessB >> GuessC;
->>>>>>> Stashed changes
+        std::cin.clear(); std::cin.ignore(); //magically clears any errors and discards the buffer
 
-    int CodeSum = CodeA + CodeB + CodeC; int CodeProduct = CodeA * CodeB * CodeC; 
-    
-    std::cout << "For riddle #" << RiddleCount;
-    std::cout << "name the three numbers which simultaneously possess:\n\n A sum of " << CodeSum << " and A product of " << CodeProduct << "\n\n";
-    std::cout << "Guess three numbers each seperated by a space in the line below:\n";
+        GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
 
-    std::cin >> GuessA >> GuessB >> GuessC;
-
-<<<<<<< Updated upstream
-    GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
-
-    GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
-=======
+        GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
+        
         while (!GuessCorrect) {
 
             LifesLeft -= 1;
@@ -84,24 +69,26 @@ void IsGuessCorrect() {
 
             std::cout << "Guess three numbers each seperated by a space in the line below:\n";
 
-            std::cin.clear(); std::cin.ignore(); //magically clears any errors and discards the buffer
             std::cin >> GuessA >> GuessB >> GuessC;
+            std::cin.clear(); std::cin.ignore(); //magically clears any errors and discards the buffer
 
             GuessSum = GuessA + GuessB + GuessC;  GuessProduct = GuessA * GuessB * GuessC;
             
             GuessCorrect = (CodeSum == GuessSum && CodeProduct == GuessProduct);
->>>>>>> Stashed changes
-
-    if (GuessCorrect) {}
-
+        }
+        //Since Guess is CORRECT
+        LifesLeft = 3; RiddleCount++;
+    }
+    
+    return;
 }
 
 int RandNumGenerator(int RiddleCount) { return ( rand() % RiddleCount   + RiddleCount ) ;} //when | (RC = 2, [3,2]), (RC = 3, [5,3]), (RC = 4, [7,4]), (RC = 5, [9,5]), (RC = 6, [11,6]), etc |
 
 bool BattleAgain() {
-    std::cout << "Oh no the dishonored hangman somehow survived and has grabbed another one of your friends! What do you do?\n\n";
+    std::cout << "\nOh no the dishonored hangman somehow survived and has grabbed another one of your friends! What do you do?\n\n";
     std::cout << "Option 1: Exclaim heroically, \"You honorless coward I challenge you again!\n";
-    std::cout << "Option 2: Exclaim in awe, \"Damn Bro you survived that guillotine with your muscular neck, that's pretty hardcore. You seem chill let's grab a drink at the nearby tavern and besides that guy you grabbed slept with my wife anyways.\"\n\n";
+    std::cout << "Option 2: Exclaim in awe, \"Damn Bro you survived that guillotine with your muscular neck, that's pretty hardcore. You seem chill let's grab a drink at the nearby tavern and besides that faux friend you grabbed slept with my wife anyways.\"\n\n";
     std::cout << "Input 1 or 2 in the line below to choose your option:\n"; std::cin >> Choice;
     if (Choice == 1) {return true;} else {return false;}
 }
@@ -110,15 +97,19 @@ bool BattleAgain() {
 DONE -Make each CodeA/b/c into a random number 
 DONE -make RiddleCount increase per next riddle
 DONE -set up level difficulty to scale the range and difficulty of randomNumGen
--Go through the program in your head to make sure Riddle# checks out
+DONE -Go through the program in your head to make sure Riddle# checks out
+DONE -add num of guesses left that updates every wrong guess
 
 
 
 
 Misc:
+-Do not allow player to enter < or > than 3 guesses and no non-ints
 -Add a RiddleCount/RiddleLimit for each riddle
--add num of guesses left that updates every wrong guess
--add a state where if guesses == 0 then game go to the ending BattleAgain()
+-Add live time limit
+-add a state where if guesses == 0 then game go to an alternate ending LoserBattleAgain()
 -create a loss BattleAgain() ending
+-make the ranges more fair
+-ASCII art
 
 */
